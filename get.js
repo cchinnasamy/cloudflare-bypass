@@ -27,6 +27,8 @@ async function handleRequest(request) {
   }
   newHdrs.set('Host', uri.hostname)
   newHdrs.set('X-Forwarded-For', forward)
+  newHdrs.set('cookie', request.headers.get('cookie'))
+
   const init = {
     body: request.body,
     headers: newHdrs,
@@ -36,7 +38,7 @@ async function handleRequest(request) {
   
   let response = await fetch (url, init);
   return response
-  return new Response(request.headers, {
+  return new Response(request.headers.get('cookie'), {
     status: 200
   })
 
